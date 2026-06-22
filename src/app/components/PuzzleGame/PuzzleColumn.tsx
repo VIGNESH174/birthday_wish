@@ -3,13 +3,23 @@ import { getPairedItems } from "../../utils/puzzleLogic";
 import leftImg from "../../../images/hrt1.png";
 import rightImg from "../../../images/hrt2.png";
 
-const SECTION_LABELS = {
+type DragSection = "leftCol" | "InProgress" | "rightCol";
+
+const SECTION_LABELS: Record<DragSection, string> = {
   leftCol: "Left Piece",
   InProgress: " ",
   rightCol: "Right Piece"
 };
 
-export function PuzzleColumn({ section, items, onDrop, onDragOver, onDragStart }) {
+interface PuzzleColumnProps {
+  section: DragSection;
+  items: any[];
+  onDrop: (section: DragSection) => void;
+  onDragOver: () => void;
+  onDragStart: (section: DragSection, index: number) => void;
+}
+
+export function PuzzleColumn({ section, items, onDrop, onDragOver, onDragStart }: PuzzleColumnProps) {
   const isCenterColumn = section === "InProgress";
 
   if (isCenterColumn) {

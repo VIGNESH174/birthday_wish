@@ -1,7 +1,11 @@
 import heartImg from "../../../images/heart.png";
 import { SUCCESS_MESSAGES } from "../../data/messages";
 
-export function SuccessScreen({ onHeartClick }) {
+type SuccessScreenProps = {
+  onHeartClick: () => void;
+};
+
+export function SuccessScreen({ onHeartClick }: SuccessScreenProps) {
   return (
     <div className="success-container">
       <div className="message-container" onClick={onHeartClick}>

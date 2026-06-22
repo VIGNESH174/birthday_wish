@@ -3,7 +3,11 @@ import { INTRO_MESSAGES } from '../../data/messages';
 
 // THIS FUNC SHOWS THE BIRTHDAY INTRO SCREEN WITH MESSAGES AND STYLING
 
-export function BirthdayIntro({ onStart }) {
+type BirthdayIntroProps = {
+  onStart: () => void;
+};
+
+export function BirthdayIntro({ onStart }: BirthdayIntroProps) {
   return (
     <div className="intro-container">
       <div className="intro-content">

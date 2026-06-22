@@ -4,7 +4,7 @@ export const INTRO_MESSAGES = {
   title: 'Is it your birthday today??',
   subtitle: 'Something magical is about to happen... ✨',
   description1: 'But first we need to fix your heart 💕',
-  description2: 'Because it deals with so much and needs love ',
+  description2: 'Because it deals with so much and needs care ',
   button: 'Let\'s Begin! <3',
 };
 
@@ -23,6 +23,7 @@ export const SUCCESS_MESSAGES = {
 
 /* ---- WISH MESSAGES ---- */
 export const WISH_MESSAGES = [
+  "Wish Happy Birthday My Dear Friend",
   "One year older, ten times hotter.. ",
   "May all your delulu come trululu.. ",
   "Have a purrfect ♪(^∇^*) birthday.. ",

@@ -4,18 +4,32 @@ import { SuccessScreen } from "../SuccessScreen";
 import { PUZZLE_MESSAGES } from "../../data/messages";
 import { canDrop, getPairedItems, playGlassSlideSound } from "../../utils/puzzleLogic";
 
-const initialData = {
+type PuzzleItem = { sliceId: number; side: string };
+
+type PuzzleData = {
+  leftCol: PuzzleItem[];
+  InProgress: PuzzleItem[];
+  rightCol: PuzzleItem[];
+};
+
+type DragItem = {
+  sourceSection: keyof PuzzleData;
+  idx: number;
+  item: PuzzleItem;
+};
+
+const initialData: PuzzleData = {
   leftCol: [{ sliceId: 1, side: "left" }],
   InProgress: [],
   rightCol: [{ sliceId: 1, side: "right" }],
 };
 
-export function PuzzleGame({ onHeartClick }) {
-  const [data, setData] = useState(initialData);
-  const [dragItem, setDragItem] = useState(null);
+export function PuzzleGame({ onHeartClick }: { onHeartClick: () => void }) {
+  const [data, setData] = useState<PuzzleData>(initialData);
+  const [dragItem, setDragItem] = useState<DragItem | null>(null);
   const [showSuccess, setShowSuccess] = useState(false);
 
-  const handleDragStart = (section, idx) => {
+  const handleDragStart = (section: keyof PuzzleData, idx: number) => {
     setDragItem({
       sourceSection: section,
       idx,
@@ -23,8 +37,8 @@ export function PuzzleGame({ onHeartClick }) {
     });
   };
 
-  const handleDrop = (targetSection) => {
-    if (!canDrop(dragItem, targetSection)) {
+  const handleDrop = (targetSection: keyof PuzzleData) => {
+    if (!dragItem || !canDrop(dragItem, targetSection)) {
       setDragItem(null);
       return;
     }
@@ -43,7 +57,10 @@ export function PuzzleGame({ onHeartClick }) {
     }
   };
 
-  const handleDragOver = (e) => e.preventDefault();
+  const handleDragOver = (...args: any[]) => {
+    const event = args[0] as React.DragEvent<HTMLDivElement> | undefined;
+    event?.preventDefault();
+  };
 
   if (showSuccess) {
     return <SuccessScreen onHeartClick={onHeartClick} />;
@@ -57,10 +74,10 @@ export function PuzzleGame({ onHeartClick }) {
 
       <div className="flex flex-col items-center gap-2 sm:gap-3 max-w-[600px] mx-auto mb-6 sm:mb-8">
         <p className="text-base sm:text-lg lg:text-xl text-[#c9184a] font-semibold text-center leading-relaxed tracking-wide">
-          {PUZZLE_MESSAGES.instruction1}
+          {(PUZZLE_MESSAGES as any).instruction1}
         </p>
         <p className="text-sm sm:text-base lg:text-lg text-[#d63a5a] font-medium text-center leading-normal opacity-90">
-          {PUZZLE_MESSAGES.instruction2}
+          {(PUZZLE_MESSAGES as any).instruction2}
         </p>
       </div>
 
@@ -68,8 +85,8 @@ export function PuzzleGame({ onHeartClick }) {
         {Object.keys(data).map((section) => (
           <PuzzleColumn
             key={section}
-            section={section}
-            items={data[section]}
+            section={section as keyof PuzzleData}
+            items={data[section as keyof PuzzleData]}
             onDrop={handleDrop}
             onDragOver={handleDragOver}
             onDragStart={handleDragStart}

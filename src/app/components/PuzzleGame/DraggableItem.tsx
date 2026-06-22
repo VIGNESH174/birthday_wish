@@ -2,7 +2,21 @@ import { useState } from "react";
 import leftImg from "../../../images/hrt1.png";
 import rightImg from "../../../images/hrt2.png";
 
-export function DraggableItem({ item, section, index, onDragStart }) {
+type PuzzleItem = {
+  sliceId: number;
+  side: "left" | "right";
+};
+
+type DragSection = "leftCol" | "InProgress" | "rightCol";
+
+type DraggableItemProps = {
+  item: PuzzleItem;
+  section: DragSection;
+  index: number;
+  onDragStart: (section: DragSection, index: number) => void;
+};
+
+export function DraggableItem({ item, section, index, onDragStart }: DraggableItemProps) {
   const [isDragging, setIsDragging] = useState(false);
 
   const handleDragStart = () => {
