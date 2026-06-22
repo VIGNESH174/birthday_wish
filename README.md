@@ -5,4 +5,4 @@ feel free to use it
 had dark mode feature too 
 feel free to use it on any device
 
-link - https://remarkable-nasturtium-ec9aeb.netlify.app/
+Link - https://birthday-wish-v7-8t0uke8iq-vignesh174s-projects.vercel.app/
